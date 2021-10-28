@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property mixed $id
  * @property mixed $name
+ * @property mixed $picture
  */
 class Tag extends Model
 {
