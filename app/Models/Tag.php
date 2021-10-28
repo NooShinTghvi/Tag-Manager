@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed $id
+ */
 class Tag extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description', 'picture'];
+    protected $fillable = ['name', 'slug', 'description'];
 
     protected $hidden = ['created_at', 'updated_at'];
 

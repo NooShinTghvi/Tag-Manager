@@ -17,7 +17,7 @@ class TagFactory extends Factory
         return [
             'name' => $title,
             'slug' => $title,
-            'description' => $this->faker->sentences(2),
+            'description' => implode(' ', $this->faker->sentences(2)),
             'picture' => 'picture/logo_studio.png',
         ];
     }
