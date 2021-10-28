@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Tools\PaginationController;
-use App\Http\Requests\Tag\StoreRequest;
+use App\Http\Requests\Tag\StoreTagRequest;
+use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -30,19 +31,20 @@ class TagController extends Controller
         return response($tags, 206);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreTagRequest $request)
     {
         return Tag::query()->create($request->validated());
     }
 
-    public function show()
+    public function show(Tag $tag): Tag
     {
-
+        return $tag;
     }
 
-    public function update()
+    public function update(Tag $tag, UpdateTagRequest $request)
     {
-
+        $tag->update($request->validated());
+        return response($tag);
     }
 
     public function destroy()

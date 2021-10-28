@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class TagTest extends TestCase
 {
-//    use RefreshDatabase;
+    use RefreshDatabase;
 
     public function test_create()
     {
@@ -36,5 +36,29 @@ class TagTest extends TestCase
             ->assertStatus(206)
             ->json();
 //        $this->assertCount(sizeof($tag), $response['data']);
+    }
+
+    public function test_show()
+    {
+        $tag = Tag::factory()->create();
+        $response = $this->getJson(route('tag.show', $tag->id))
+            ->assertOk()
+            ->json();
+
+        $this->assertEquals($tag->name, $response['name']);
+    }
+
+    public function test_update()
+    {
+        $tag = Tag::factory()->create();
+        $newTag = Tag::factory()->make();
+        $response = $this->patchJson(route('tag.update', $tag->id), [
+            'name' => $newTag->name,
+            'slug' => $newTag->slug,
+        ])
+            ->assertOk()
+            ->json();
+
+        $this->assertEquals($newTag->name, $response['name']);
     }
 }

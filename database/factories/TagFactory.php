@@ -11,9 +11,9 @@ class TagFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
-        $title = $this->faker->title;
+        $title = $this->faker->unique->word;
         return [
             'name' => $title,
             'slug' => $title,
