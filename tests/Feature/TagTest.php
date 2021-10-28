@@ -11,11 +11,6 @@ class TagTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     public function test_create()
     {
         $tag = Tag::factory()->make();
@@ -32,5 +27,14 @@ class TagTest extends TestCase
             'slug' => $tag->slug,
             'description' => $tag->description
         ]);
+    }
+
+    public function test_index()
+    {
+//        $tag = Tag::query()->paginate(5);
+        $response = $this->getJson(route('tag.index'))
+            ->assertStatus(206)
+            ->json();
+//        $this->assertCount(sizeof($tag), $response['data']);
     }
 }
