@@ -61,4 +61,13 @@ class TagTest extends TestCase
 
         $this->assertEquals($newTag->name, $response['name']);
     }
+
+    public function test_destroy()
+    {
+        $tag = Tag::factory()->create();
+        $this->deleteJson(route('tag.destroy', $tag->id))
+            ->assertNoContent();
+
+        $this->assertDatabaseMissing('tags', ['id' => $tag->id]);
+    }
 }

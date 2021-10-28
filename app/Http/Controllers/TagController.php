@@ -57,9 +57,10 @@ class TagController extends Controller
         return response($tag);
     }
 
-    public function destroy()
+    public function destroy(Tag $tag)
     {
-
+        $tag->delete();
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     public function uploadPicture(StorePictureRequest $request, Tag $tag)
