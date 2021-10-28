@@ -13,8 +13,12 @@ class TagFactory extends Factory
      */
     public function definition()
     {
+        $title = $this->faker->title;
         return [
-            //
+            'name' => $title,
+            'slug' => $title,
+            'description' => $this->faker->sentences(2),
+            'picture' => 'picture/logo_studio.png',
         ];
     }
 }

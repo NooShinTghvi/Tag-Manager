@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Tag extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'slug', 'description', 'picture'];
+
+    protected $hidden = ['created_at', 'updated_at'];
+
+    public function articles(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Article::class, 'taggable');
+    }
+
+    public function products(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(Product::class, 'taggable');
+    }
 }
