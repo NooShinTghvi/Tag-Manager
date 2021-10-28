@@ -9,7 +9,7 @@ use Tests\TestCase;
 
 class TagTest extends TestCase
 {
-    use RefreshDatabase;
+//    use RefreshDatabase;
 
     public function test_create()
     {

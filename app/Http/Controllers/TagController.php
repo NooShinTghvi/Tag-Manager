@@ -14,12 +14,16 @@ class TagController extends Controller
     {
         $tags = Tag::query()->get();
 
-//        if ($request->filled('search')) {
-//            $word = $request->input('search');
-//            $businessTypes = $tags->filter(function ($item) use ($word) {
-//                return strpos($item->name, $word) !== false || strpos($item->description, $word) !== false;
-//            });
-//        }
+        if ($request->filled('search')) {
+            $word = $request->input('search');
+            $tags = $tags->filter(function ($item) use ($word) {
+                return strpos($item->name, $word) !== false;
+            });
+        }
+
+        if ($request->filled('sortBy') && $request->filled('isDesc'))
+            if (in_array($request->filled('sortBy'), ['id', 'name', 'created_at']))
+                $tags = $tags->sortBy($request->input('sortBy'), SORT_REGULAR, $request->input('isDesc'));
 
         $tags = App::make(PaginationController::class)($request, $tags);
 
