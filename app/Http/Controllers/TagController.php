@@ -18,6 +18,12 @@ class TagController extends Controller
     public function index(Request $request)
     {
         $tags = Tag::query()->get();
+        $tags = Tag::query()
+            ->get()
+            ->map(function (Tag $tag) {
+                $tag->picture = App::make(CreateLinkController::class)($tag->picture);
+                return $tag;
+            });;
 
         if ($request->filled('search')) {
             $word = $request->input('search');
