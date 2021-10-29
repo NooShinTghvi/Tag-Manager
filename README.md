@@ -6,31 +6,31 @@ There are two simple entity (Article and Product) For testing.
 
 #  Getting started
 
-- ###Install dependencies
+- Install dependencies
   > composer install
   
-- ###Create .env file and 
+- Create .env file and 
   > cp .env.example .env
 
-- ###Generate the application key
+- Generate the application key
     > php artisan key:generate
 
-- ###Migration
+- Migration
     create a  db in database, complete  `DB_USERNAME`  &  `DB_PASSWORD` in **.env**
   > php artisan migrate
 
-- ###To create the symbolic link
+- To create the symbolic link
   >php artisan storage:link
   
-- ###Launch the server
+- Launch the server
   >php artisan serve
   > 
   complete `APP_URL` in **.env**
 
-- ###Run test
+- Run test
   > php artisan test
   
-- ###Seeder
+- Seeder
   > php artisan db:seed
 ------------------------------
 
