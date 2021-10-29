@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Article;
+use App\Models\Product;
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        Tag::factory(15)->create();
+        Product::factory(15)->create();
+        Article::factory(15)->create();
     }
 }
