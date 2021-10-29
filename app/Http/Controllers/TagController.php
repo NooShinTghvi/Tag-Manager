@@ -17,7 +17,6 @@ class TagController extends Controller
 {
     public function index(Request $request)
     {
-        $tags = Tag::query()->get();
         $tags = Tag::query()
             ->get()
             ->map(function (Tag $tag) {

@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed $id
+ * @property mixed $name
+ */
 class Article extends Model
 {
     use HasFactory;
@@ -16,5 +20,14 @@ class Article extends Model
     public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function addTag($tagId)
+    {
+        return Taggable::query()->create([
+            'tag_id' => $tagId,
+            'taggable_type' => 'App\Models\Article',
+            'taggable_id' => $this->id,
+        ]);
     }
 }
