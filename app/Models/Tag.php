@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed $id
  * @property mixed $name
  * @property mixed $picture
+ * @property mixed $articles
+ * @property mixed $products
  */
 class Tag extends Model
 {
@@ -16,7 +18,7 @@ class Tag extends Model
 
     protected $fillable = ['name', 'slug', 'description'];
 
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['articles', 'products', 'created_at', 'updated_at'];
 
     public function articles(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {

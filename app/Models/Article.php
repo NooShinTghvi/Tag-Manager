@@ -24,6 +24,7 @@ class Article extends Model
 
     public function addTag($tagId)
     {
+//        $this->tags()->attach($tagId);
         return Taggable::query()->create([
             'tag_id' => $tagId,
             'taggable_type' => 'App\Models\Article',

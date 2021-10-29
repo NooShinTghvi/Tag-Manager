@@ -9,6 +9,7 @@ use App\Http\Requests\StorePictureRequest;
 use App\Http\Requests\Tag\StoreTagRequest;
 use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Models\Tag;
+use App\Models\Taggable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class TagController extends Controller
             ->map(function (Tag $tag) {
                 $tag->picture = App::make(CreateLinkController::class)($tag->picture);
                 return $tag;
-            });;
+            });
 
         if ($request->filled('search')) {
             $word = $request->input('search');
@@ -45,9 +46,36 @@ class TagController extends Controller
         return Tag::query()->create($request->validated());
     }
 
-    public function show(Tag $tag): Tag
+    public function show(Tag $tag): array
     {
-        return $tag;
+        $tag->picture = App::make(CreateLinkController::class)($tag->picture);
+
+        $data = [];
+        $data['info'] = $tag;
+        $data['articles'] = $this->preparingToShow($tag->articles);
+        $data['products'] = $this->preparingToShow($tag->products);
+        return $data;
+    }
+
+    private function preparingToShow($objects): array
+    {
+        $data = [];
+        foreach ($objects as $object)
+            array_push($data, [
+                'id' => $object->id,
+                'name' => $object->name,
+                'pivot_id' => $this->findTaggable($object->pivot)->id
+            ]);
+        return $data;
+    }
+
+    private function findTaggable($obj)
+    {
+        return Taggable::query()
+            ->where('tag_id', $obj->tag_id)
+            ->where('taggable_type', $obj->taggable_type)
+            ->where('taggable_id', $obj->taggable_id)
+            ->first();
     }
 
     public function update(UpdateTagRequest $request, Tag $tag)
@@ -67,7 +95,7 @@ class TagController extends Controller
         $this->deletePicture($tag);
         $path = App::make(FileController::class)->save('picture/', $request->file('picture'));
 
-        $tag->picture= $path;
+        $tag->picture = $path;
         $tag->save();
 
         $tag->picture = App::make(CreateLinkController::class)($tag->picture);
@@ -82,10 +110,10 @@ class TagController extends Controller
 
     private function deletePicture(Tag $tag)
     {
-        if (!is_null($tag->picture)){
+        if (!is_null($tag->picture)) {
             App::make(FileController::class)->delete($tag->picture);
 
-            $tag->picture= null;
+            $tag->picture = null;
             $tag->save();
         }
     }

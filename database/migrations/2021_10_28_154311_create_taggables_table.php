@@ -20,6 +20,7 @@ class CreateTaggablesTable extends Migration
                 ->onUpdate('cascade')->onDelete('restrict');
             $table->string('taggable_type');
             $table->integer('taggable_id');
+            $table->unique(['tag_id', 'taggable_type', 'taggable_id']);
             $table->timestamps();
         });
     }
