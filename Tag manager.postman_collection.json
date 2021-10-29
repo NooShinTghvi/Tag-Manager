@@ -1,0 +1,318 @@
+{
+	"info": {
+		"_postman_id": "d21f2a1c-57c1-4665-8495-768d6c4024e4",
+		"name": "Tag manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "store",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "tag 1",
+							"type": "text"
+						},
+						{
+							"key": "slug",
+							"value": "tag-3",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "this is tag 3",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/tag",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"tag"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "index",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/tag",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"tag"
+					],
+					"query": [
+						{
+							"key": "search",
+							"value": "8",
+							"disabled": true
+						},
+						{
+							"key": "sortBy",
+							"value": "name",
+							"disabled": true
+						},
+						{
+							"key": "isDesc",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "show",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/tag/6",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"tag",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "destroy",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/tag/5",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"tag",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{url}}/tag/3?name=w27&slug=w24&description=gh",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"tag",
+						"3"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "w27"
+						},
+						{
+							"key": "slug",
+							"value": "w24"
+						},
+						{
+							"key": "description",
+							"value": "gh"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload picture",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "picture",
+							"type": "file",
+							"src": "/D:/Desktop/vue images/ghn.PNG"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/picture/4",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"picture",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "destroy picture",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{url}}/picture/4",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"picture",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "taggable",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/taggable/6/to/Product/14",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"taggable",
+						"6",
+						"to",
+						"Product",
+						"14"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "taggable",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/taggable/3",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"taggable",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
