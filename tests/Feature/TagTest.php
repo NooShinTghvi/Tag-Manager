@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Article;
+use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -9,7 +11,7 @@ use Tests\TestCase;
 
 class TagTest extends TestCase
 {
-//    use RefreshDatabase;
+    use RefreshDatabase;
 
     public function test_create()
     {
@@ -40,12 +42,16 @@ class TagTest extends TestCase
 
     public function test_show()
     {
-        $tag = Tag::factory()->create();
+        $tag = Tag::factory()
+            ->has(Article::factory()->count(3))
+            ->has(Product::factory()->count(5))
+            ->create();
         $response = $this->getJson(route('tag.show', $tag->id))
             ->assertOk()
             ->json();
-
-        $this->assertEquals($tag->name, $response['name']);
+        $this->assertEquals($tag->name, $response['info']['name']);
+        $this->assertCount(3,$response['articles']);
+        $this->assertCount(5,$response['products']);
     }
 
     public function test_update()
