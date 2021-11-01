@@ -9,6 +9,7 @@ use App\Http\Requests\StorePictureRequest;
 use App\Http\Requests\Tag\StoreTagRequest;
 use App\Http\Requests\Tag\UpdateTagRequest;
 use App\Http\Resources\TagResource;
+use App\Http\Traits\FileManagerTrait;
 use App\Models\Tag;
 use App\Models\Taggable;
 use Illuminate\Http\Request;
@@ -18,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TagController extends Controller
 {
+    use FileManagerTrait;
+
     public function index(Request $request)
     {
         $tags = Tag::query();
@@ -68,12 +71,11 @@ class TagController extends Controller
     public function uploadPicture(StorePictureRequest $request, Tag $tag)
     {
         $this->deletePicture($tag);
-        $path = App::make(FileController::class)->save('picture/', $request->file('picture'));
+        $path = $this->saveFilesInStorage('picture/', $request->file('picture'));
 
         $tag->picture = $path;
         $tag->save();
 
-        $tag->picture = App::make(CreateLinkController::class)($tag->picture);
         return response($tag, Response::HTTP_OK);
     }
 
@@ -86,7 +88,7 @@ class TagController extends Controller
     private function deletePicture(Tag $tag)
     {
         if (!is_null($tag->picture)) {
-            App::make(FileController::class)->delete($tag->picture);
+            $this->deleteFileFromStorage($tag->getAttributes()['picture']);
 
             $tag->picture = null;
             $tag->save();

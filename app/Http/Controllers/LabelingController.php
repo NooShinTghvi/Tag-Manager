@@ -41,9 +41,19 @@ class LabelingController extends Controller
             ->exists();
     }
 
-    public function remove(Taggable $taggable)
+    public function remove(Tag $tag, $type, $id)
     {
-        $taggable->delete();
+        if (!in_array($type, ['Article', 'Product']))
+            return response('URL path is not correct', Response::HTTP_BAD_REQUEST);
+
+        $model = 'App\Models\\' . $type;
+        if (!$this->isObjExist($model, $id))
+            return response($type . ' does not exist', Response::HTTP_NOT_FOUND);
+
+        if (!Taggable::search($tag->id, $model, $id)->exists())
+            return response('', Response::HTTP_NOT_FOUND);
+
+        Taggable::search($tag->id, $model, $id)->delete();
         return response('', Response::HTTP_NO_CONTENT);
     }
 }

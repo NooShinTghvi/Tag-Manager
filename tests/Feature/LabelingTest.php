@@ -67,7 +67,12 @@ class LabelingTest extends TestCase
             'taggable_id' => $article->id
         ]);
 
-        $response = $this->deleteJson(route('labeling.remove', $taggable->id))
+        $response = $this->deleteJson(
+            route('labeling.remove', [
+                $tag->id,
+                'Article',
+                $article->id
+            ]))
             ->assertNoContent();
 
         $this->assertDatabaseMissing('taggables', [

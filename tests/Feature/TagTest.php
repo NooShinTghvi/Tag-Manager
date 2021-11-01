@@ -49,9 +49,9 @@ class TagTest extends TestCase
         $response = $this->getJson(route('tag.show', $tag->id))
             ->assertOk()
             ->json();
-        $this->assertEquals($tag->name, $response['info']['name']);
-        $this->assertCount(3,$response['articles']);
-        $this->assertCount(5,$response['products']);
+        $this->assertEquals($tag->name, $response['data']['info']['name']);
+        $this->assertCount(3, $response['data']['articles']);
+        $this->assertCount(5, $response['data']['products']);
     }
 
     public function test_update()

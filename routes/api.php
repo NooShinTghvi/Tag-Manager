@@ -12,4 +12,4 @@ Route::post('picture/{tag}', [TagController::class, 'uploadPicture'])->name('upl
 Route::delete('picture/{tag}', [TagController::class, 'destroyPicture'])->name('destroy.picture');
 
 Route::post('taggable/{tag}/to/{type}/{id}', [LabelingController::class, 'add'])->name('labeling.add');
-Route::delete('taggable/{taggable}', [LabelingController::class, 'remove'])->name('labeling.remove');
+Route::delete('taggable/{tag}/to/{type}/{id}', [LabelingController::class, 'remove'])->name('labeling.remove');
