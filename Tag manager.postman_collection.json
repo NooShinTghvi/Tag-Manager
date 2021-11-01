@@ -80,7 +80,7 @@
 					"query": [
 						{
 							"key": "search",
-							"value": "8",
+							"value": ".com",
 							"disabled": true
 						},
 						{
@@ -89,8 +89,8 @@
 							"disabled": true
 						},
 						{
-							"key": "isDesc",
-							"value": "1",
+							"key": "direction",
+							"value": "desc",
 							"disabled": true
 						}
 					]
@@ -225,18 +225,18 @@
 						{
 							"key": "picture",
 							"type": "file",
-							"src": "/D:/Desktop/vue images/ghn.PNG"
+							"src": "/D:/Desktop/vue images/q1.PNG"
 						}
 					]
 				},
 				"url": {
-					"raw": "{{url}}/picture/4",
+					"raw": "{{url}}/picture/2",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"picture",
-						"4"
+						"2"
 					]
 				}
 			},
@@ -281,7 +281,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/taggable/6/to/Product/14",
+					"raw": "{{url}}/taggable/6/to/Article/21",
 					"host": [
 						"{{url}}"
 					],
@@ -289,8 +289,8 @@
 						"taggable",
 						"6",
 						"to",
-						"Product",
-						"14"
+						"Article",
+						"21"
 					]
 				}
 			},
@@ -302,13 +302,16 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/taggable/3",
+					"raw": "{{url}}/taggable/6/to/Article/22",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"taggable",
-						"3"
+						"6",
+						"to",
+						"Article",
+						"22"
 					]
 				}
 			},
