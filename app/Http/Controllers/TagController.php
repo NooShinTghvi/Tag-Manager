@@ -8,35 +8,37 @@ use App\Http\Controllers\Tools\PaginationController;
 use App\Http\Requests\StorePictureRequest;
 use App\Http\Requests\Tag\StoreTagRequest;
 use App\Http\Requests\Tag\UpdateTagRequest;
+use App\Http\Resources\TagResource;
 use App\Models\Tag;
 use App\Models\Taggable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class TagController extends Controller
 {
     public function index(Request $request)
     {
-        $tags = Tag::query()
-            ->get()
-            ->map(function (Tag $tag) {
-                $tag->picture = App::make(CreateLinkController::class)($tag->picture);
-                return $tag;
-            });
+        $tags = Tag::query();
 
         if ($request->filled('search')) {
             $word = $request->input('search');
-            $tags = $tags->filter(function ($item) use ($word) {
-                return strpos($item->name, $word) !== false;
-            });
+            $tags = $tags->search($word);
         }
 
-        if ($request->filled('sortBy') && $request->filled('isDesc'))
-            if (in_array($request->filled('sortBy'), ['id', 'name', 'created_at']))
-                $tags = $tags->sortBy($request->input('sortBy'), SORT_REGULAR, $request->input('isDesc'));
+        if ($request->filled('sortBy') && in_array($request->input('sortBy'), ['id', 'name', 'created_at'])) {
+            $columnName = $request->input('sortBy');
+            if ($request->filled('direction') && in_array($request->input('direction'), ['asc', 'desc'])) {
+                $direction = $request->input('direction');
+                $tags = $tags->order($columnName, $direction);
+            }
+        }
 
-        $tags = App::make(PaginationController::class)($request, $tags);
+        $rpp = $request->filled('rpp')
+            ? $request->input('rpp')
+            : 5;
+        $tags = $tags->paginate($rpp);
 
         return response($tags, 206);
     }
@@ -46,36 +48,9 @@ class TagController extends Controller
         return Tag::query()->create($request->validated());
     }
 
-    public function show(Tag $tag): array
+    public function show(Tag $tag): TagResource
     {
-        $tag->picture = App::make(CreateLinkController::class)($tag->picture);
-
-        $data = [];
-        $data['info'] = $tag;
-        $data['articles'] = $this->preparingToShow($tag->articles);
-        $data['products'] = $this->preparingToShow($tag->products);
-        return $data;
-    }
-
-    private function preparingToShow($objects): array
-    {
-        $data = [];
-        foreach ($objects as $object)
-            array_push($data, [
-                'id' => $object->id,
-                'name' => $object->name,
-                'pivot_id' => $this->findTaggable($object->pivot)->id
-            ]);
-        return $data;
-    }
-
-    private function findTaggable($obj)
-    {
-        return Taggable::query()
-            ->where('tag_id', $obj->tag_id)
-            ->where('taggable_type', $obj->taggable_type)
-            ->where('taggable_id', $obj->taggable_id)
-            ->first();
+        return new TagResource($tag);
     }
 
     public function update(UpdateTagRequest $request, Tag $tag)

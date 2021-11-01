@@ -13,7 +13,7 @@ class TagFactory extends Factory
      */
     public function definition(): array
     {
-        $title = $this->faker->unique->word;
+        $title = $this->faker->unique->userName;
         return [
             'name' => $title,
             'slug' => $title,
