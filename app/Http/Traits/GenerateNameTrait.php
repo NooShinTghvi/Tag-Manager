@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Tools;
+namespace App\Http\Traits;
 
-use App\Http\Controllers\Controller;
-
-class GenerateNameController extends Controller
+trait GenerateNameTrait
 {
     /**
      * Handle the incoming request.
@@ -13,7 +11,7 @@ class GenerateNameController extends Controller
      * @param string $type
      * @return string
      */
-    public function __invoke($n, string $type = 'both'): string
+    public function generateName($n, string $type = 'both'): string
     {
         $randomString = '';
         if ($type == 'letters')
